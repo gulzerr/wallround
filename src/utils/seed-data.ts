@@ -70,6 +70,6 @@ export async function seedUsers() {
   }
 }
 
-// (async () => {
-//   await seedUsers();
-// })();
+(async () => {
+  await seedUsers();
+})();

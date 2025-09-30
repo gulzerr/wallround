@@ -1,5 +1,8 @@
 # Backend Query Builder and Filter Library
 
+[![Node.js](https://img.shields.io/badge/node.js-22%2B-brightgreen)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/typescript-5.8-blue)](https://www.typescriptlang.org/)
+
 A Node.js backend service that provides a reusable filter library for building complex database queries with field exposure restrictions and type-safe validation.
 
 ## Features
@@ -20,13 +23,13 @@ A Node.js backend service that provides a reusable filter library for building c
 - **Jest** for testing
 - **PostgreSQL** database
 
-## Setup Instructions
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js (LTS version)
+- Node.js 18+ (LTS recommended)
 - PostgreSQL database
-- Yarn package manager
+- npm or yarn package manager
 
 ### Installation
 
@@ -40,6 +43,8 @@ A Node.js backend service that provides a reusable filter library for building c
 2. **Install dependencies**
 
    ```bash
+   npm install
+   # or
    yarn install
    ```
 
@@ -47,7 +52,7 @@ A Node.js backend service that provides a reusable filter library for building c
    Create a `.env` file with your database configuration:
 
    ```env
-   DATABASE_URL="postgresql://postgres:password@localhost:5432/wallround"
+   DATABASE_URL=<database_url>
    ```
 
 4. **Set up the database**
@@ -56,29 +61,12 @@ A Node.js backend service that provides a reusable filter library for building c
    npx prisma generate
    ```
 
-   The run the following queries in database
+   The run the following commands sequentially
 
-   ````sql
-   -- Create the role enum
-    CREATE TYPE role AS ENUM ('user', 'admin', 'moderator');
-    DROP TYPE "role";
-
-    -- Create the users table
-    CREATE TABLE "users" (
-      id SERIAL PRIMARY KEY,
-      uuid TEXT UNIQUE NOT NULL,
-      email TEXT UNIQUE NOT NULL,
-      name TEXT NOT NULL,
-      age INTEGER NOT NULL,
-      role "role" DEFAULT 'user',
-      "isActive" BOOLEAN DEFAULT true,
-      password TEXT NOT NULL,
-      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-      "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-    );
-       ```
-
-   ````
+   ```bash
+   yarn db:push
+   yarn db:seed
+   ```
 
 5. **Start the development server**
    ```bash
@@ -418,4 +406,50 @@ All errors include descriptive messages to help with debugging.
 - Field exposure restriction prevents sensitive data access
 - Input validation prevents injection attacks
 - Type safety prevents unexpected data manipulation
+
+## 🔧 CI/CD Pipeline
+
+This project includes a comprehensive GitHub Actions workflow that:
+
+### Automated Testing
+
+- ✅ Runs tests on Node.js 18.x and 20.x
+- ✅ Tests against real PostgreSQL database
+- ✅ Generates code coverage reports
+- ✅ Uploads coverage to Codecov
+
+### Quality Assurance
+
+- ✅ TypeScript compilation checks
+- ✅ Build verification
+- ✅ Security audit scanning
+- ✅ Dependency vulnerability checks
+
+### Continuous Integration
+
+- 🚀 Triggers on push to main/master/develop
+- 🚀 Runs on all pull requests
+- 🚀 Parallel job execution for faster feedback
+- 🚀 Status badges for quick project health overview
+
+### Running CI Locally
+
+```bash
+# Run all tests with coverage
+npm run test:coverage
+
+# Type checking
+npm run lint
+
+```
+
+## 📊 Project Status
+
+- ✅ **Core Features**: Complete
+- ✅ **API Endpoints**: Implemented (GET & POST)
+- ✅ **Test Coverage**: Comprehensive
+- ✅ **Documentation**: Complete
+- ✅ **CI/CD Pipeline**: Automated
+- ✅ **Type Safety**: Strict TypeScript
+- ✅ **Security**: Input validation & field restrictions
 - Password field explicitly excluded from all operations

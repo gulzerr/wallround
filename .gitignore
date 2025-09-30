@@ -1,5 +1,39 @@
-node_modules
-.DS_Store
-.env
+# Dependencies
+node_modules/
+yarn-error.log
+.yarn/
 
-/src/generated/prisma
+# Build outputs
+dist/
+build/
+
+# Test coverage reports
+coverage/
+*.lcov
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Prisma
+.env
+prisma/migrations/dev.db*
+
+# Temporary files
+tmp/
+temp/
