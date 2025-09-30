@@ -275,10 +275,6 @@ yarn test
 yarn test tests/user-filter.integration.test.ts
 ```
 
-### E2E Test Result
-
-![Test Result](E2E-test-result.png)
-
 ### Test Categories
 
 - **Unit Tests**: Filter validation, query building, type checking
