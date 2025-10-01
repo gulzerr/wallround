@@ -1,4 +1,9 @@
-import { FilterDefinition, FilterGroup, FilterCondition } from "./types";
+import {
+  FilterDefinition,
+  FilterGroup,
+  FilterCondition,
+  OPERATORS,
+} from "./types";
 
 export class PrismaQueryBuilder {
   buildPrismaQuery(filter: FilterDefinition): any {
@@ -33,31 +38,31 @@ export class PrismaQueryBuilder {
     const { field, operator, value } = condition;
 
     switch (operator) {
-      case "eq":
+      case OPERATORS.EQ:
         return { [field]: { equals: value } };
-      case "neq":
+      case OPERATORS.NEQ:
         return { [field]: { not: value } };
-      case "gt":
+      case OPERATORS.GT:
         return { [field]: { gt: value } };
-      case "lt":
+      case OPERATORS.LT:
         return { [field]: { lt: value } };
-      case "gte":
+      case OPERATORS.GTE:
         return { [field]: { gte: value } };
-      case "lte":
+      case OPERATORS.LTE:
         return { [field]: { lte: value } };
-      case "in":
+      case OPERATORS.IN:
         return { [field]: { in: value } };
-      case "between":
+      case OPERATORS.BETWEEN:
         return { [field]: { gte: value[0], lte: value[1] } };
-      case "contains":
+      case OPERATORS.CONTAINS:
         return { [field]: { contains: value, mode: "insensitive" } };
-      case "starts_with":
+      case OPERATORS.STARTS_WITH:
         return { [field]: { startsWith: value, mode: "insensitive" } };
-      case "ends_with":
+      case OPERATORS.ENDS_WITH:
         return { [field]: { endsWith: value, mode: "insensitive" } };
-      case "is_null":
+      case OPERATORS.IS_NULL:
         return { [field]: { equals: null } };
-      case "is_not_null":
+      case OPERATORS.IS_NOT_NULL:
         return { [field]: { not: null } };
       default:
         throw new Error(`Unsupported operator: ${operator}`);

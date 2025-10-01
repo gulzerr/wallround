@@ -4,6 +4,7 @@ import {
   FilterCondition,
   SqlQuery,
   FieldSchema,
+  OPERATORS,
 } from "./types";
 
 export class SqlQueryBuilder {
@@ -62,49 +63,49 @@ export class SqlQueryBuilder {
     const processedValue = this.processValueByType(value, fieldSchema.type);
 
     switch (operator) {
-      case "eq":
+      case OPERATORS.EQ:
         return `${columnName} = ${this.formatValue(
           processedValue,
           fieldSchema.type,
           field
         )}`;
 
-      case "neq":
+      case OPERATORS.NEQ:
         return `${columnName} != ${this.formatValue(
           processedValue,
           fieldSchema.type,
           field
         )}`;
 
-      case "gt":
+      case OPERATORS.GT:
         return `${columnName} > ${this.formatValue(
           processedValue,
           fieldSchema.type,
           field
         )}`;
 
-      case "lt":
+      case OPERATORS.LT:
         return `${columnName} < ${this.formatValue(
           processedValue,
           fieldSchema.type,
           field
         )}`;
 
-      case "gte":
+      case OPERATORS.GTE:
         return `${columnName} >= ${this.formatValue(
           processedValue,
           fieldSchema.type,
           field
         )}`;
 
-      case "lte":
+      case OPERATORS.LTE:
         return `${columnName} <= ${this.formatValue(
           processedValue,
           fieldSchema.type,
           field
         )}`;
 
-      case "in":
+      case OPERATORS.IN:
         const processedArray = (value as any[]).map((v) =>
           this.processValueByType(v, fieldSchema.type)
         );
@@ -113,7 +114,7 @@ export class SqlQueryBuilder {
           .join(", ");
         return `${columnName} IN (${formattedValues})`;
 
-      case "between":
+      case OPERATORS.BETWEEN:
         const [min, max] = value as [any, any];
         const processedMin = this.processValueByType(min, fieldSchema.type);
         const processedMax = this.processValueByType(max, fieldSchema.type);
@@ -123,22 +124,22 @@ export class SqlQueryBuilder {
           field
         )} AND ${this.formatValue(processedMax, fieldSchema.type, field)}`;
 
-      case "contains":
+      case OPERATORS.CONTAINS:
         return `${columnName} ILIKE ${this.formatValue(
           `%${value}%`,
           "string"
         )}`;
 
-      case "starts_with":
+      case OPERATORS.STARTS_WITH:
         return `${columnName} ILIKE ${this.formatValue(`${value}%`, "string")}`;
 
-      case "ends_with":
+      case OPERATORS.ENDS_WITH:
         return `${columnName} ILIKE ${this.formatValue(`%${value}`, "string")}`;
 
-      case "is_null":
+      case OPERATORS.IS_NULL:
         return `${columnName} IS NULL`;
 
-      case "is_not_null":
+      case OPERATORS.IS_NOT_NULL:
         return `${columnName} IS NOT NULL`;
 
       default:

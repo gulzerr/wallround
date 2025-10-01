@@ -1,6 +1,7 @@
 import prisma from "../../utils/db";
 import {
   FilterDefinition,
+  filterValidationSchema,
   FilterValidator,
   PrismaQueryBuilder,
 } from "../../lib/filter";
@@ -58,5 +59,35 @@ export class UserFilterService {
       (err as any).status = 500;
       throw err;
     }
+  }
+
+  async encodeUrlEncodedQuery(encodedFilter: string) {
+    let filterQueries;
+    let config;
+    try {
+      const decodedFilter = decodeURIComponent(encodedFilter as string);
+      filterQueries = JSON.parse(decodedFilter);
+      config = filterQueries.config;
+    } catch (decodeError) {
+      const err = new Error(
+        "Invalid encoded filter format. Expected URI encoded JSON."
+      );
+      (err as any).status = 400;
+      throw err;
+    }
+
+    const { error: validationError } =
+      filterValidationSchema.validate(filterQueries);
+
+    if (validationError) {
+      const err = new Error(
+        `Invalid filter structure: ${validationError.message}`
+      );
+      (err as any).status = 400;
+      throw err;
+    }
+
+    const data = await this.filterUsers(filterQueries, config);
+    return data;
   }
 }

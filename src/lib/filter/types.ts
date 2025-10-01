@@ -1,3 +1,5 @@
+import { Joi } from "celebrate";
+
 export type FieldType =
   | "string"
   | "number"
@@ -21,21 +23,21 @@ export type Operator =
   | "is_null"
   | "is_not_null";
 
-export const OPERATORS: Operator[] = [
-  "eq",
-  "neq",
-  "gt",
-  "lt",
-  "gte",
-  "lte",
-  "in",
-  "between",
-  "contains",
-  "starts_with",
-  "ends_with",
-  "is_null",
-  "is_not_null",
-];
+export enum OPERATORS {
+  EQ = "eq",
+  NEQ = "neq",
+  GT = "gt",
+  LT = "lt",
+  GTE = "gte",
+  LTE = "lte",
+  IN = "in",
+  BETWEEN = "between",
+  CONTAINS = "contains",
+  STARTS_WITH = "starts_with",
+  ENDS_WITH = "ends_with",
+  IS_NULL = "is_null",
+  IS_NOT_NULL = "is_not_null",
+}
 
 export interface FieldSchema {
   name: string;
@@ -67,3 +69,23 @@ export interface ValidationError {
 export interface SqlQuery {
   query: string;
 }
+
+export const conditionSchema = Joi.object({
+  field: Joi.string().required(),
+  operator: Joi.string()
+    .valid(...Object.values(OPERATORS))
+    .required(),
+  value: Joi.any(),
+});
+
+export const filterValidationSchema = Joi.object({
+  and: Joi.array().items(
+    Joi.alternatives().try(
+      conditionSchema,
+      Joi.object({
+        or: Joi.array().items(conditionSchema),
+      })
+    )
+  ),
+  config: Joi.string().valid("prisma", "sql").optional(),
+});
