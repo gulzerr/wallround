@@ -369,19 +369,7 @@ The application includes sample users for testing:
 - **Bob Wilson** (bob.wilson@example.com) - User role, age 45, active
 - **Alice Brown** (alice.brown@example.com) - Admin role, age 29, active
 
-## SQL query for creating these datasets
-
 ## Error Handling
-
-```sql
--- Insert sample users data
-INSERT INTO "users" ( uuid, email, name, age, role, isActive, password) VALUES
-('550e8400-e29b-41d4-a716-446655440001', 'admin@example.com', 'Admin User', 35, 'admin'::role, true, 'hashedPassword1'),
-('550e8400-e29b-41d4-a716-446655440002', 'john.doe@example.com', 'John Doe', 28, 'user'::role, true, 'hashedPassword2'),
-('550e8400-e29b-41d4-a716-446655440003', 'jane.smith@example.com', 'Jane Smith', 32, 'moderator'::role, false, 'hashedPassword3'),
-('550e8400-e29b-41d4-a716-446655440004', 'bob.wilson@example.com', 'Bob Wilson', 45, 'user'::role, true, 'hashedPassword4'),
-('550e8400-e29b-41d4-a716-446655440005', 'alice.brown@example.com', 'Alice Brown', 29, 'admin'::role, true, 'hashedPassword5');
-```
 
 The API handles various error scenarios:
 
@@ -409,33 +397,29 @@ This project includes a comprehensive GitHub Actions workflow that:
 
 ### Automated Testing
 
-- ✅ Runs tests on Node.js 18.x and 20.x
+- ✅ Runs tests on Node.js 22.x
 - ✅ Tests against real PostgreSQL database
 - ✅ Generates code coverage reports
-- ✅ Uploads coverage to Codecov
 
 ### Quality Assurance
 
 - ✅ TypeScript compilation checks
 - ✅ Build verification
-- ✅ Security audit scanning
-- ✅ Dependency vulnerability checks
 
 ### Continuous Integration
 
-- 🚀 Triggers on push to main/master/develop
+- 🚀 Triggers on push to master/develop
 - 🚀 Runs on all pull requests
 - 🚀 Parallel job execution for faster feedback
-- 🚀 Status badges for quick project health overview
 
 ### Running CI Locally
 
 ```bash
 # Run all tests with coverage
-npm run test:coverage
+yarn test:coverage
 
 # Type checking
-npm run lint
+yarn lint
 
 ```
 
