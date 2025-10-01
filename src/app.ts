@@ -6,14 +6,6 @@ import morganBody from "morgan-body";
 import filterCtrl from "./controllers/user/user-filter";
 import commonCtrl from "./controllers/common/index";
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: any;
-    }
-  }
-}
-
 const app = express();
 
 app.use(bodyParser.json());
