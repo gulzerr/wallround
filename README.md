@@ -1,7 +1,7 @@
 # Backend Query Builder and Filter Library
 
 [![Node.js](https://img.shields.io/badge/node.js-22%2B-brightgreen)](https://nodejs.org/)
-[![TypeScript](https://img.shields.io/badge/typescript-5.8-blue)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/typescript-5.9-blue)](https://www.typescriptlang.org/)
 
 A Node.js backend service that provides a reusable filter library for building complex database queries with field exposure restrictions and type-safe validation.
 
