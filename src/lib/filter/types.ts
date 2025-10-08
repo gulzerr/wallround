@@ -78,14 +78,19 @@ export const conditionSchema = Joi.object({
   value: Joi.any(),
 });
 
-export const filterValidationSchema = Joi.object({
+const groupSchema: Joi.Schema = Joi.object({
   and: Joi.array().items(
-    Joi.alternatives().try(
-      conditionSchema,
-      Joi.object({
-        or: Joi.array().items(conditionSchema),
-      })
-    )
+    Joi.alternatives().try(conditionSchema, Joi.link("#group"))
   ),
+  or: Joi.array().items(
+    Joi.alternatives().try(conditionSchema, Joi.link("#group"))
+  ),
+})
+  .id("group")
+  .or("and", "or");
+
+export const filterValidationSchema = Joi.object({
+  and: Joi.array().items(Joi.alternatives().try(conditionSchema, groupSchema)),
+  or: Joi.array().items(Joi.alternatives().try(conditionSchema, groupSchema)),
   config: Joi.string().valid("prisma", "sql").optional(),
-});
+}).or("and", "or");
