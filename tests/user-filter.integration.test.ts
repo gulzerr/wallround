@@ -5,7 +5,7 @@ describe("POST /users/filter with prisma query", () => {
   it("should return all users with empty filter", async () => {
     const response = await request(app)
       .post("/users/filter")
-      .send({})
+      .send()
       .expect(200);
 
     expect(response.body.isError).toBe(false);
@@ -179,7 +179,7 @@ describe("POST /users/filter with raw SQL query", () => {
   it("should return all users with empty filter", async () => {
     const response = await request(app)
       .post("/users/filter")
-      .send({})
+      .send({ config: "sql" })
       .expect(200);
 
     expect(response.body.isError).toBe(false);

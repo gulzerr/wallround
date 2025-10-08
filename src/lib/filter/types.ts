@@ -93,4 +93,4 @@ export const filterValidationSchema = Joi.object({
   and: Joi.array().items(Joi.alternatives().try(conditionSchema, groupSchema)),
   or: Joi.array().items(Joi.alternatives().try(conditionSchema, groupSchema)),
   config: Joi.string().valid("prisma", "sql").optional(),
-}).or("and", "or");
+});

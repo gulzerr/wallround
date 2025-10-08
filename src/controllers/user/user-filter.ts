@@ -16,7 +16,7 @@ router.post(
   async (req, res) => {
     try {
       const filterQueries = req.body;
-      const config = req.body.config;
+      const config = req.body?.config;
       const data = await userFilterService.filterUsers(filterQueries, config);
       res.status(200).json({
         isError: false,

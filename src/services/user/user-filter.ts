@@ -19,7 +19,7 @@ export class UserFilterService {
   }
 
   async filterUsers(filter: FilterDefinition, config?: string) {
-    const errors = this.validator.validate(filter);
+    const errors = filter ? this.validator.validate(filter) : [];
 
     if (errors.length > 0) {
       const error = new Error(
@@ -36,7 +36,7 @@ export class UserFilterService {
         const users = await prisma.$queryRawUnsafe(result.query);
         return users;
       }
-      const query = this.queryBuilder.buildPrismaQuery(filter);
+      const query = filter ? this.queryBuilder.buildPrismaQuery(filter) : {};
       const users = await prisma.user.findMany({
         where: query,
         select: {
